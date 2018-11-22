@@ -1,0 +1,14 @@
+{
+  "name": "data_collector",
+  "version": "0.0.0",
+  "description": "It is just simple data collector",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"There is no test\" && exit 1"
+  },
+  "author": {
+    "name": "Jingi Kim",
+    "email": "copyx00@gmail.com"
+  },
+  "license": "ISC"
+}
