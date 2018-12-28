@@ -1,12 +1,25 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai').use(chaiHttp);
+const mongoose = require('mongoose');
 
 const supertest = require('supertest');
-const server = require('../server');
+const server = require('../app');
 const Data = require('../model/Data');
 
-const request = supertest.agent(server);
 chai.should();
+const request = supertest(server);
+
+after((done) => {
+  mongoose.disconnect()
+    .then(() => {
+      console.debug('Mongo connection is disconnected.\n');
+      done();
+    })
+    .catch((err) => {
+      console.error('Error on Mongo disconnecting: ', err.message);
+      done(err);
+    });
+});
 
 describe('/', () => {
   describe('GET', () => {

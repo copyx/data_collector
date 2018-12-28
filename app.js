@@ -5,12 +5,19 @@ const qs = require('querystring');
 const mongoose = require('mongoose');
 const Data = require('./model/Data');
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
+const dbUri = process.env.MONGO_URI;
+
+if (!dbUri) {
+  console.error('There is no MONGO_URI');
+  process.exit(1);
+}
+
+mongoose.connect(dbUri, { useNewUrlParser: true })
   .then(() => {
-    console.debug('Mongo connected!\n');
+    console.debug('Mongo connection is established.\n');
   })
   .catch((err) => {
-    console.error('Mongo connection err: ', err.message);
+    console.error('Error on Mongo connecting: ', err.message);
   });
 
 const app = http.createServer((request, response) => {
@@ -44,7 +51,5 @@ const app = http.createServer((request, response) => {
     response.end(`"${path}" is unknown path.`);
   }
 });
-
-app.listen(3000, () => console.log('Start listening on 3000\n'));
 
 module.exports = app;
